@@ -8,23 +8,45 @@ import javax.swing.ImageIcon;
  */
 
 /**
+ * Shot
  *
- * @author http://zetcode.com/ modified by David Benítez and Patricio Sánchez
+ * Modela la definición de todos los objetos de tipo
+ * <code>shot</code>, como hijo de sprite
+ *
+ * @author Patricio Sanchez and David Benitez
+ * @version 1.0
+ * @date 3/4/2015
  */
+
 public class Shot extends Sprite {
 
-    private String shot = "shot.png";
-    private final int H_SPACE = 6;
-    private final int V_SPACE = 1;
+    private String strShot = "shot.png"; //nombre de la imagen
+    private final int iH_SPACE = 6; //Espacio en horizontal respecto al mono
+    private final int iV_SPACE = 1; //Espacio vertical respecto al mono
 
+    /**
+     * Shot
+     * 
+     * constructor de la clase shot
+     * 
+     */
     public Shot() {
+        
     }
 
-    public Shot(int x, int y) {
+    /**
+     * Shot
+     * 
+     * constructor alterno de la clase shot
+     * 
+     * @param iX es un <code>int</code> que es posicion en x
+     * @param iY es un <code>int</code> que es posicion en y
+     */
+    public Shot(int iX, int iY) {
 
-        ImageIcon ii = new ImageIcon(this.getClass().getResource(shot));
+        ImageIcon ii = new ImageIcon(this.getClass().getResource(strShot));
         setImage(ii.getImage());
-        setX(x + H_SPACE);
-        setY(y - V_SPACE);
+        setX(iX + iH_SPACE);
+        setY(iY - iV_SPACE);
     }
 }

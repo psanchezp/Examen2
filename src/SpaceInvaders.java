@@ -6,11 +6,22 @@
 import javax.swing.JFrame;
 
 /**
+ * Commons
  *
- * @author http://zetcode.com/, modified by David Benítez and Patricio Sánchez
+ * constantes del juego
+ *
+ * @author Patricio Sanchez and David Benitez
+ * @version 1.0
+ * @date 3/4/2015
  */
 public class SpaceInvaders extends JFrame implements Commons {
 
+    /**
+     * SpaceInvaders
+     * 
+     * constructor del juego
+     * 
+     */
     public SpaceInvaders()
     {
         add(new Board());
@@ -22,6 +33,13 @@ public class SpaceInvaders extends JFrame implements Commons {
         setResizable(false);
     }
 
+    /**
+     * Main
+     * 
+     * Llama al constructor del juego
+     * 
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
         new SpaceInvaders();
     }

@@ -9,17 +9,24 @@ import java.awt.Rectangle;
  */
 
 /**
+ * Sprite
  *
- * @author http://zetcode.com/ modified by David Benítez and Patricio Sánchez
+ * Modela la definición de todos los objetos de tipo
+ * <code>Sprite</code>
+ *
+ * @author Patricio Sanchez and David Benitez
+ * @version 1.0
+ * @date 3/4/2015
  */
+
 public class Sprite {
 
-    private boolean visible; //si el sprite esta visible (muerto)
-    private Image image; //imagen del sprite
-    protected int x; //posicion en x
-    protected int y; //posicion en y
-    protected boolean dying; //si el sprite esta muriendo
-    protected int dx; //diferencial de movimiento en x
+    private boolean bVisible; //si el sprite esta bVisible (muerto)
+    private Image ImaImagen; //imagen del sprite
+    protected int iX; //posicion en x
+    protected int iY; //posicion en iY
+    protected boolean bDying; //si el sprite esta muriendo
+    protected int iDx; //diferencial de movimiento en x
 
     
     /**
@@ -29,29 +36,29 @@ public class Sprite {
      * 
      */
     public Sprite() {
-        visible = true;
+        bVisible = true;
     }
 
     /**
      * die
      * 
-     * Metodo que modifica si el sprite esta visible al momento de morir
+     * Metodo que modifica si el sprite esta bVisible al momento de morir
      * 
      */
     public void die() {
-        visible = false;
+        bVisible = false;
     }
     
     /**
      * isVisible
      * 
-     * Metodo que regresa si el sprite esta visible
+     * Metodo que regresa si el sprite esta bVisible
      * 
-     * @return <code>bool</code> que es si esta visible o no
+     * @return <code>bool</code> que es si esta bVisible o no
      * 
      */
     public boolean isVisible() {
-        return visible;
+        return bVisible;
     }
 
     /**
@@ -59,11 +66,11 @@ public class Sprite {
      * 
      * Metodo que modifica si el sprite esta visible
      * 
-     * @param visible es un <code>bool</code> que es si esta visible o no
+     * @param bVisible es un <code>bool</code> que es si esta visible o no
      * 
      */
-    protected void setVisible(boolean visible) {
-        this.visible = visible;
+    protected void setVisible(boolean bVisible) {
+        this.bVisible = bVisible;
     }
 
     /**
@@ -71,11 +78,11 @@ public class Sprite {
      * 
      * Metodo que modifica la imagen del sprite
      * 
-     * @param image es un <code>Image</code> que es la imagen
+     * @param ImaImagen es un <code>Image</code> que es la imagen
      * 
      */
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImage(Image ImaImagen) {
+        this.ImaImagen = ImaImagen;
     }
 
     /**
@@ -87,7 +94,7 @@ public class Sprite {
      * 
      */
     public Image getImage() {
-        return image;
+        return ImaImagen;
     }
     
     /**
@@ -98,8 +105,8 @@ public class Sprite {
      * @param x es un <code>int</code> que es su posicion en x
      * 
      */
-    public void setX(int x) {
-        this.x = x;
+    public void setX(int iX) {
+        this.iX = iX;
     }
 
     /**
@@ -110,8 +117,8 @@ public class Sprite {
      * @param y es un <code>int</code> que es su posicion en y
      * 
      */
-    public void setY(int y) {
-        this.y = y;
+    public void setY(int iY) {
+        this.iY = iY;
     }
 
     /**
@@ -123,7 +130,7 @@ public class Sprite {
      * 
      */
     public int getY() {
-        return y;
+        return iY;
     }
 
     /**
@@ -135,7 +142,7 @@ public class Sprite {
      * 
      */
     public int getX() {
-        return x;
+        return iX;
     }
 
      /**
@@ -146,8 +153,8 @@ public class Sprite {
      * @param dying es un <code>bool</code> que es si esta muriendo o no
      * 
      */
-    public void setDying(boolean dying) {
-        this.dying = dying;
+    public void setDying(boolean bDying) {
+        this.bDying = bDying;
     }
 
      /**
@@ -159,7 +166,7 @@ public class Sprite {
      * 
      */
     public boolean isDying() {
-        return this.dying;
+        return this.bDying;
     }
         
     /**

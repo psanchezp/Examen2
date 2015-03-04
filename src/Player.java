@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class Player extends Sprite implements Commons{
 
-    private final int START_Y = 380; 
+    private final int START_Y = 340; 
     private final int START_X = 270;
 
     private final String player = "player.png";

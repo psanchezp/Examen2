@@ -19,6 +19,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
@@ -255,9 +257,9 @@ public class Board extends JPanel implements Runnable, Commons {
                 //Checa colision del shot con el alien
                 if (alien.isVisible() && shot.isVisible()) {
                     if (alien.intersecta(shot, ALIEN_HEIGHT, ALIEN_WIDTH, 30, 30)){
-                            ImageIcon ii = 
+                            ImageIcon iI = 
                                 new ImageIcon(getClass().getResource(expl));
-                            alien.setImage(ii.getImage());
+                            alien.setImage(iI.getImage());
                             alien.setDying(true);
                             scSonido1.play();
                             deaths++;
@@ -399,7 +401,34 @@ public class Board extends JPanel implements Runnable, Commons {
     public void save()  throws IOException {
         PrintWriter fileOut = new PrintWriter(new FileWriter("gameData.txt"));
 
-        //fileOut.println(bPause); //se guarda si el juego estaba en pausa
+        fileOut.println(bPausa); //se guarda si el juego estaba en pausa
+        fileOut.println(bInstrucciones); //se guarda si el juego estaba en pausa
+        fileOut.println(direction); //Se guarda direccion de aliens
+        fileOut.println(deaths); //Se guarda cantidad de aliens destruidos
+        
+        //Se guardan variables del alien
+        Iterator it = aliens.iterator();
+        while (it.hasNext()) {
+            Alien alien = (Alien) it.next();
+            Alien.Bomb b = alien.getBomb(); //Se crea la bomba
+
+            fileOut.println(alien.getX()); //se guarda x del alien
+            fileOut.println(alien.getY()); //se guarda y del alien
+            fileOut.println(alien.isVisible()); //se guarda si el alien es visible
+            fileOut.println(b.getX());
+            fileOut.println(b.getY());
+            fileOut.println(b.isDestroyed());
+        }
+        
+        //Se guardan variables del jugador
+        fileOut.println(player.getX()); //se guarda x del jugador
+        fileOut.println(player.getY()); //se guarda y del jugador
+        fileOut.println(player.bDying); //se guarda bDying del jugador
+        
+        //Se guardan variables del shot
+        fileOut.println(shot.getX()); //se guarda x del shot
+        fileOut.println(shot.getY()); //se guarda y del shot
+        fileOut.println(shot.isVisible()); //se guarda bVisible del shot
      
         fileOut.close();    //Se cierra el archivo
     }
@@ -472,7 +501,11 @@ public class Board extends JPanel implements Runnable, Commons {
           
           //Se guarda juego
           if(e.getKeyCode() == KeyEvent.VK_G) {
-              //bPausa = !bPausa;
+              try {
+                  save();
+              } catch (IOException ex) {
+                  Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+              }
           }
           
           //Se carga juego

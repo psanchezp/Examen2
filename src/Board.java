@@ -42,6 +42,8 @@ public class Board extends JPanel implements Runnable, Commons {
     private final String alienpix = "alien.png";
     private String message = "Game Over";
     private boolean bPausa;
+    private boolean bInstrucciones;
+    private boolean bGameOver;
     
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
@@ -69,6 +71,8 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameInit() {
 
         bPausa = false;
+        bInstrucciones = false;
+        bGameOver = false;
         
         aliens = new ArrayList();
 
@@ -191,6 +195,25 @@ public class Board extends JPanel implements Runnable, Commons {
         g.setFont(small);
         g.drawString(message, (BOARD_WIDTH - metr.stringWidth(message))/2, 
             BOARD_WIDTH/2);
+    }
+    
+    public void menu()
+    {
+
+        Graphics g = this.getGraphics();
+
+        // Actualiza la imagen de fondo.
+        if (bInstrucciones){
+            URL urlImagenFondo = this.getClass().getResource("backgroundInstrucciones.png");
+            Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+            g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        }
+        else if (bPausa){
+            URL urlImagenFondo = this.getClass().getResource("backgroundPausa.png");
+            Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+            g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        }
+         
     }
 
     public void animationCycle()  {
@@ -327,22 +350,27 @@ public class Board extends JPanel implements Runnable, Commons {
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
-
+        
         while (ingame) {
-            repaint();
-            animationCycle();
-
-            timeDiff = System.currentTimeMillis() - beforeTime;
-            sleep = DELAY - timeDiff;
-
-            if (sleep < 0) 
-                sleep = 2;
-            try {
-                Thread.sleep(sleep);
-            } catch (InterruptedException e) {
-                System.out.println("interrupted");
+            if (bPausa || bInstrucciones){
+                menu();
             }
-            beforeTime = System.currentTimeMillis();
+            else{
+                repaint();
+                animationCycle();
+
+                timeDiff = System.currentTimeMillis() - beforeTime;
+                sleep = DELAY - timeDiff;
+
+                if (sleep < 0) 
+                    sleep = 2;
+                try {
+                    Thread.sleep(sleep);
+                } catch (InterruptedException e) {
+                    System.out.println("interrupted");
+                }
+                beforeTime = System.currentTimeMillis();
+            }   
         }
         gameOver();
     }
@@ -381,16 +409,18 @@ public class Board extends JPanel implements Runnable, Commons {
           
           //Se pausa el juego
           if(e.getKeyCode() == KeyEvent.VK_P) {
-            ingame = !ingame;
+            //ingame = !ingame;
+            bPausa = !bPausa;
             message = "Pausa";
           }
           
           //Se muestran instrucciones
           if(e.getKeyCode() == KeyEvent.VK_I) {
-            ingame = !ingame;
+            //ingame = !ingame;
             message = "Instrucciones: Usa la tecla ALT para disparar a los aliens"
                     + " y destruirlos antes de que lleguen al suelo. El jugador"
                     + " se mueve con las flechas izquierda y derecha";
+            bInstrucciones = !bInstrucciones;
           }
           
          //Se muestran autores

@@ -45,6 +45,7 @@ public class Board extends JPanel implements Runnable, Commons {
     
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
+    private SoundClip scSonido3; //Disparo
     
     private Thread animator;
 
@@ -91,6 +92,7 @@ public class Board extends JPanel implements Runnable, Commons {
         
         scSonido1 = new SoundClip ("explosion1.wav");
         scSonido2 = new SoundClip ("explosion2.wav");
+        scSonido3 = new SoundClip ("laser.wav");
     }
 
     public void drawAliens(Graphics g) 
@@ -362,8 +364,10 @@ public class Board extends JPanel implements Runnable, Commons {
           if (ingame)
           {
             if (e.isAltDown()) {
-                if (!shot.isVisible())
+                if (!shot.isVisible()){
                     shot = new Shot(x, y);
+                    scSonido3.play();
+                }
             }
           }
           

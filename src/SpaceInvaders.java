@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author http://zetcode.com/
+ * @author http://zetcode.com/, modified by David Benítez and Patricio Sánchez
  */
 public class SpaceInvaders extends JFrame implements Commons {
 

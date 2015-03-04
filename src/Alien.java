@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author http://zetcode.com/
+ * @author http://zetcode.com/ modified by David Benítez and Patricio Sánchez
  */
 public class Alien extends Sprite {
 

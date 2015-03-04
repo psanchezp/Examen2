@@ -166,8 +166,10 @@ public class Board extends JPanel implements Runnable, Commons {
 
         Graphics g = this.getGraphics();
 
-        g.setColor(Color.black);
-        g.fillRect(0, 0, BOARD_WIDTH, BOARD_HEIGTH);
+        // Actualiza la imagen de fondo.
+        URL urlImagenFondo = this.getClass().getResource("background.png");
+        Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+         g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
 
         g.setColor(new Color(0, 32, 48));
         g.fillRect(50, BOARD_WIDTH/2 - 30, BOARD_WIDTH-100, 50);

@@ -8,6 +8,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -375,12 +382,45 @@ public class Board extends JPanel implements Runnable, Commons {
         gameOver();
     }
     
-    public void save() {
-        
+    /**
+     * Save
+     * 
+     * Clase para guardar juego
+     * 
+     * @throws IOException 
+     */
+    public void save()  throws IOException {
+        PrintWriter fileOut = new PrintWriter(new FileWriter("gameData.txt"));
+
+        //fileOut.println(bPause); //se guarda si el juego estaba en pausa
+     
+        fileOut.close();    //Se cierra el archivo
     }
     
-    public void load() {
+    /**
+     * Load
+     * 
+     * Clase para cargar juego
+     * 
+     * @throws IOException 
+     */
+    public void load() throws IOException {
+                                                                  
+        BufferedReader fileIn;
+        try {
+            fileIn = new BufferedReader(new FileReader("gameData.txt"));
+        } catch (FileNotFoundException e){
+            File puntos = new File("gameData.txt");
+            PrintWriter fileOut = new PrintWriter(puntos);
+            fileOut.println("100, demo");
+            fileOut.close();
+            fileIn = new BufferedReader(new FileReader("gameData.txt"));
+        }
         
+        //String aux = fileIn.readLine();
+        //bPause = (Boolean.parseBoolean(aux)); //Leo si el juego está en pausa
+        
+        fileIn.close();
     }
 
     private class TAdapter extends KeyAdapter {

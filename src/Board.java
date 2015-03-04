@@ -179,6 +179,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void animationCycle()  {
 
+        //Si ya mataron a todos los jugadores
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
             ingame = false;
             message = "Game won!";
@@ -187,7 +188,7 @@ public class Board extends JPanel implements Runnable, Commons {
         // player
         player.act();
 
-        // shot
+        //Colisiones del disparo del jugador
         if (shot.isVisible()) {
             Iterator it = aliens.iterator();
             int shotX = shot.getX();
@@ -211,6 +212,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 }
             }
 
+            //Si se sale del board
             int y = shot.getY();
             y -= 4;
             if (y < 0)
@@ -218,10 +220,8 @@ public class Board extends JPanel implements Runnable, Commons {
             else shot.setY(y);
         }
 
-        // aliens
-
+        //colision de alien con las paredes
          Iterator it1 = aliens.iterator();
-
          while (it1.hasNext()) {
              Alien a1 = (Alien) it1.next();
              int x = a1.getX();
@@ -246,15 +246,14 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
 
-
         Iterator it = aliens.iterator();
-
         while (it.hasNext()) {
             Alien alien = (Alien) it.next();
             if (alien.isVisible()) {
 
                 int y = alien.getY();
 
+                //si los aliens llegan al piso
                 if (y > GROUND - ALIEN_HEIGHT) {
                     ingame = false;
                     message = "Invasion!";
@@ -264,8 +263,8 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
 
-        // bombs
-
+        
+        //Colisiones de las bombas de los aliens
         Iterator i3 = aliens.iterator();
         Random generator = new Random();
 
@@ -274,7 +273,6 @@ public class Board extends JPanel implements Runnable, Commons {
             Alien a = (Alien) i3.next();
             Alien.Bomb b = a.getBomb();
             if (shot == CHANCE && a.isVisible() && b.isDestroyed()) {
-
                 b.setDestroyed(false);
                 b.setX(a.getX());
                 b.setY(a.getY());   
@@ -296,6 +294,7 @@ public class Board extends JPanel implements Runnable, Commons {
                     }
             }
 
+            //Si se sale del board
             if (!b.isDestroyed()) {
                 b.setY(b.getY() + 1);   
                 if (b.getY() >= GROUND - BOMB_HEIGHT) {
@@ -354,17 +353,22 @@ public class Board extends JPanel implements Runnable, Commons {
           
           //Se pausa el juego
           if(e.getKeyCode() == KeyEvent.VK_P) {
-              bPausa = !bPausa;
+            ingame = !ingame;
+            message = "Pausa";
           }
           
           //Se muestran instrucciones
           if(e.getKeyCode() == KeyEvent.VK_I) {
-              //bPausa = !bPausa;
+            ingame = !ingame;
+            message = "Instrucciones: Usa la tecla ALT para disparar a los aliens"
+                    + " y destruirlos antes de que lleguen al suelo. El jugador"
+                    + " se mueve con las flechas izquierda y derecha";
           }
           
          //Se muestran autores
           if(e.getKeyCode() == KeyEvent.VK_R) {
-              //bPausa = !bPausa;
+            ingame = !ingame;
+            message = "Autores: David Benítez y Patricio Sánchez";
           }
           
           //Se guarda juego

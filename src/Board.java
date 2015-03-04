@@ -42,7 +42,9 @@ public class Board extends JPanel implements Runnable, Commons {
     private final String alienpix = "alien.png";
     private String message = "Game Over";
     private boolean bPausa;
-
+    
+    private SoundClip scSonido1 = new SoundClip ("explosion1.wav");
+    
     private Thread animator;
 
     public Board() 
@@ -214,6 +216,7 @@ public class Board extends JPanel implements Runnable, Commons {
                                 new ImageIcon(getClass().getResource(expl));
                             alien.setImage(ii.getImage());
                             alien.setDying(true);
+                            scSonido1.play();
                             deaths++;
                             shot.die();
                         }

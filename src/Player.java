@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class Player extends Sprite implements Commons{
 
-    private final int START_Y = 280; 
+    private final int START_Y = 380; 
     private final int START_X = 270;
 
     private final String player = "player.png";
@@ -33,20 +33,25 @@ public class Player extends Sprite implements Commons{
 
     public void act() {
         x += dx;
-        if (x <= 2) 
+        //Checa si se sale del board
+        if (x <= 2) {
             x = 2;
-        if (x >= BOARD_WIDTH - 2*width) 
-            x = BOARD_WIDTH - 2*width;
+        }
+        if (x + width >= BOARD_WIDTH) { 
+            x = BOARD_WIDTH - width;
+        }
     }
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
+        //La direccion es -2 si es a la izq
         if (key == KeyEvent.VK_LEFT)
         {
             dx = -2;
         }
 
+        //La direccion es 2 si es a la derecha
         if (key == KeyEvent.VK_RIGHT)
         {
             dx = 2;

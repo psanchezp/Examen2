@@ -53,6 +53,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private boolean bPausa;
     private boolean bInstrucciones;
     private boolean bGameOver;
+    private boolean bCredits;
     
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
@@ -86,6 +87,7 @@ public class Board extends JPanel implements Runnable, Commons {
         bPausa = false;
         bInstrucciones = false;
         bGameOver = false;
+        bCredits = false;
         
         aliens = new ArrayList();
 
@@ -191,13 +193,13 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void gameOver()
     {
-        scBackground.stop();
         Graphics g = this.getGraphics();
 
         // Actualiza la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("background.png");
         Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
-         g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        scBackground.stop();
 
         g.setColor(new Color(0, 32, 48));
         g.fillRect(50, BOARD_WIDTH/2 - 30, BOARD_WIDTH-100, 50);
@@ -226,6 +228,11 @@ public class Board extends JPanel implements Runnable, Commons {
         }
         else if (bPausa){
             URL urlImagenFondo = this.getClass().getResource("backgroundPausa.png");
+            Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+            g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        }
+        else if (bCredits){
+            URL urlImagenFondo = this.getClass().getResource("backgroundcreditos.png");
             Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
             g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
         }
@@ -368,7 +375,7 @@ public class Board extends JPanel implements Runnable, Commons {
         beforeTime = System.currentTimeMillis();
         
         while (ingame) {
-            if (bPausa || bInstrucciones){
+            if (bPausa || bInstrucciones || bCredits){
                 menu();
             }
             else{
@@ -547,8 +554,7 @@ public class Board extends JPanel implements Runnable, Commons {
           
          //Se muestran autores
           if(e.getKeyCode() == KeyEvent.VK_R) {
-            ingame = !ingame;
-            message = "Autores: David Benítez y Patricio Sánchez";
+            bCredits = !bCredits;
           }
           
           //Se guarda juego

@@ -201,10 +201,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 //Checa colision del shot con el alien
                 if (alien.isVisible() && shot.isVisible()) {
-                    if (shotX >= (alienX) && 
-                        shotX <= (alienX + ALIEN_WIDTH) &&
-                        shotY >= (alienY) &&
-                        shotY <= (alienY+ALIEN_HEIGHT) ) {
+                    if (alien.intersecta(shot, ALIEN_HEIGHT, ALIEN_WIDTH, BOMB_HEIGHT, BOMB_HEIGHT)){
                             ImageIcon ii = 
                                 new ImageIcon(getClass().getResource(expl));
                             alien.setImage(ii.getImage());

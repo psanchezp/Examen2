@@ -34,7 +34,7 @@ public class Alien extends Sprite {
     public Bomb getBomb() {
         return bomb;
     }
-
+    
     public class Bomb extends Sprite {
 
         private final String bomb = "bomb.png";

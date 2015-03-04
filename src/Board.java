@@ -41,26 +41,6 @@ import javax.swing.JPanel;
  */
 public class Board extends JPanel implements Runnable, Commons { 
 
-<<<<<<< HEAD
-    private Dimension d;
-    private ArrayList aliens;
-    private Player player;
-    private Shot shot;
-
-    private int alienX = 150;
-    private int alienY = 5;
-    private int direction = -1;
-    private int deaths = 0;
-
-    private boolean ingame = true;
-    private final String expl = "explosion.png";
-    private final String alienpix = "alien.png";
-    private String message = "Game Over";
-    private boolean bPausa;
-    private boolean bInstrucciones;
-    private boolean bGameOver;
-    private boolean bCredits;
-=======
     private Dimension d; //guarda el tamano de la pantalla
     private ArrayList aliens; //guarda los aliens
     private Player player; //objeto jugador
@@ -78,7 +58,8 @@ public class Board extends JPanel implements Runnable, Commons {
     private boolean bPausa; //si esta en pausa
     private boolean bInstrucciones; //si esta en las instrucciones
     private boolean bGameOver; //si se acabo el juego
->>>>>>> origin/master
+    private boolean bCredits;
+
     
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
@@ -127,16 +108,12 @@ public class Board extends JPanel implements Runnable, Commons {
     */
     public void gameInit() {
 
-<<<<<<< HEAD
-        bPausa = false;
-        bInstrucciones = false;
-        bGameOver = false;
-        bCredits = false;
-=======
+
         bPausa = false; //no esta en pausa
         bInstrucciones = false; //no lee las instrucciones
         bGameOver = false; //no ha perdido
->>>>>>> origin/master
+        bCredits = false; //no lee los creditos
+
         
         aliens = new ArrayList(); //aqui se guardaran los aliens
 
@@ -283,10 +260,6 @@ public class Board extends JPanel implements Runnable, Commons {
     */
     public void gameOver()
     {
-<<<<<<< HEAD
-=======
-        scBackground.stop(); //para el sonido
->>>>>>> origin/master
         Graphics g = this.getGraphics();
         
         // Actualiza la imagen de fondo.
@@ -486,11 +459,7 @@ public class Board extends JPanel implements Runnable, Commons {
         beforeTime = System.currentTimeMillis();
         
         while (ingame) {
-<<<<<<< HEAD
             if (bPausa || bInstrucciones || bCredits){
-=======
-            if (bPausa || bInstrucciones){ //muestra los menus
->>>>>>> origin/master
                 menu();
             }
             else{

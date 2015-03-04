@@ -26,7 +26,7 @@ public class Player extends Sprite implements Commons{
     private final String player = "player.png"; //Nombre de imagen
     private int width; //Ancho de player
 
-    /**
+   /**
     * Player
     * 
     * constructor de la clase player

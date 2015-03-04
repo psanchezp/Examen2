@@ -453,9 +453,61 @@ public class Board extends JPanel implements Runnable, Commons {
             fileIn = new BufferedReader(new FileReader("gameData.txt"));
         }
         
-        //String aux = fileIn.readLine();
-        //bPause = (Boolean.parseBoolean(aux)); //Leo si el juego está en pausa
+        String aux = fileIn.readLine();
+        bPausa = (Boolean.parseBoolean(aux)); //Leo si el juego está en pausa
         
+        aux = fileIn.readLine();
+        bInstrucciones = (Boolean.parseBoolean(aux)); //Leo si el juego está en instrucciones
+        
+        aux = fileIn.readLine();
+        direction = (Integer.parseInt(aux)); //Leo direccion de aliens
+        
+        aux = fileIn.readLine();
+        deaths = (Integer.parseInt(aux)); //Leo muertes de aliens
+        
+        //Se cargan variables del alien
+        Iterator it = aliens.iterator();
+        while (it.hasNext()) {
+            Alien alien = (Alien) it.next();
+            Alien.Bomb b = alien.getBomb(); //Se crea la bomba
+            
+            aux = fileIn.readLine();
+            alien.setX((Integer.parseInt(aux))); //Leo x de aliens
+            
+            aux = fileIn.readLine();
+            alien.setY((Integer.parseInt(aux))); //Leo x de aliens
+            
+            aux = fileIn.readLine();
+            alien.setVisible((Boolean.parseBoolean(aux))); //Leo si el alien es visible
+            
+            aux = fileIn.readLine();
+            b.setX((Integer.parseInt(aux))); //Leo x de bomba de alien
+            
+            aux = fileIn.readLine();
+            b.setY((Integer.parseInt(aux))); //Leo x de bomba de alien
+            
+            aux = fileIn.readLine();
+            b.setDestroyed((Boolean.parseBoolean(aux))); //Leo si la bomba de alien esta destruida
+        }
+        
+        aux = fileIn.readLine();
+        player.setX((Integer.parseInt(aux))); //Leo x de jugador
+        
+        aux = fileIn.readLine();
+        player.setY((Integer.parseInt(aux))); //Leo y de jugador
+        
+        aux = fileIn.readLine();
+        player.setDying((Boolean.parseBoolean(aux))); //Leo si el jugador se esta muriendo
+        
+        aux = fileIn.readLine();
+        shot.setX((Integer.parseInt(aux))); //Leo x de shot
+        
+        aux = fileIn.readLine();
+        shot.setY((Integer.parseInt(aux))); //Leo y de shot
+        
+        aux = fileIn.readLine();
+        shot.setVisible((Boolean.parseBoolean(aux))); //Leo si el shot es visible
+
         fileIn.close();
     }
 
@@ -510,7 +562,11 @@ public class Board extends JPanel implements Runnable, Commons {
           
           //Se carga juego
           if(e.getKeyCode() == KeyEvent.VK_C) {
-              //bPausa = !bPausa;
+              try {
+                  load();
+              } catch (IOException ex) {
+                  Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+              }
           }
           
         }

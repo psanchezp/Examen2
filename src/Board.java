@@ -55,6 +55,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
     private SoundClip scSonido3; //Disparo
+    private SoundClip scBackground; //Background sound
     
     private Thread animator;
 
@@ -104,6 +105,9 @@ public class Board extends JPanel implements Runnable, Commons {
         scSonido1 = new SoundClip ("explosion1.wav");
         scSonido2 = new SoundClip ("explosion2.wav");
         scSonido3 = new SoundClip ("laser.wav");
+        scBackground = new SoundClip ("darudesandstorm.wav");
+        scBackground.setLooping (true);
+        scBackground.play();
     }
 
     public void drawAliens(Graphics g) 
@@ -182,7 +186,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void gameOver()
     {
-
+        scBackground.stop();
         Graphics g = this.getGraphics();
 
         // Actualiza la imagen de fondo.

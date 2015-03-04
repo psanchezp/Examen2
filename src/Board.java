@@ -39,6 +39,7 @@ public class Board extends JPanel implements Runnable, Commons {
     private final String expl = "explosion.png";
     private final String alienpix = "alien.png";
     private String message = "Game Over";
+    private boolean bPausa;
 
     private Thread animator;
 
@@ -61,6 +62,8 @@ public class Board extends JPanel implements Runnable, Commons {
 
     public void gameInit() {
 
+        bPausa = false;
+        
         aliens = new ArrayList();
 
         ImageIcon ii = new ImageIcon(this.getClass().getResource(alienpix));
@@ -196,6 +199,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 int alienX = alien.getX();
                 int alienY = alien.getY();
 
+                //Checa colision del shot con el alien
                 if (alien.isVisible() && shot.isVisible()) {
                     if (shotX >= (alienX) && 
                         shotX <= (alienX + ALIEN_WIDTH) &&
@@ -345,6 +349,7 @@ public class Board extends JPanel implements Runnable, Commons {
           int x = player.getX();
           int y = player.getY();
 
+          //Si dispara
           if (ingame)
           {
             if (e.isAltDown()) {
@@ -352,6 +357,32 @@ public class Board extends JPanel implements Runnable, Commons {
                     shot = new Shot(x, y);
             }
           }
+          
+          //Se pausa el juego
+          if(e.getKeyCode() == KeyEvent.VK_P) {
+              bPausa = !bPausa;
+          }
+          
+          //Se muestran instrucciones
+          if(e.getKeyCode() == KeyEvent.VK_I) {
+              //bPausa = !bPausa;
+          }
+          
+         //Se muestran autores
+          if(e.getKeyCode() == KeyEvent.VK_R) {
+              //bPausa = !bPausa;
+          }
+          
+          //Se guarda juego
+          if(e.getKeyCode() == KeyEvent.VK_G) {
+              //bPausa = !bPausa;
+          }
+          
+          //Se carga juego
+          if(e.getKeyCode() == KeyEvent.VK_C) {
+              //bPausa = !bPausa;
+          }
+          
         }
     }
 }

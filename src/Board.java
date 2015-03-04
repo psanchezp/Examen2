@@ -31,11 +31,17 @@ import javax.swing.JPanel;
  */
 
 /**
+ * Board
  *
- * @author http://zetcode.com/
+ * Aquí corre el juego
+ *
+ * @author Patricio Sanchez and David Benitez
+ * @version 1.0
+ * @date 3/4/2015
  */
 public class Board extends JPanel implements Runnable, Commons { 
 
+<<<<<<< HEAD
     private Dimension d;
     private ArrayList aliens;
     private Player player;
@@ -54,6 +60,25 @@ public class Board extends JPanel implements Runnable, Commons {
     private boolean bInstrucciones;
     private boolean bGameOver;
     private boolean bCredits;
+=======
+    private Dimension d; //guarda el tamano de la pantalla
+    private ArrayList aliens; //guarda los aliens
+    private Player player; //objeto jugador
+    private Shot shot; //objeto shot
+
+    private int alienX = 150; //posicion inicial del alien en x
+    private int alienY = 5; //posicion inicial del alien en y
+    private int direction = -1; //direccion inicial
+    private int deaths = 0; //cantidad de aliens destruidos
+
+    private boolean ingame = true; //si el juego debe de correr
+    private final String expl = "explosion.png"; //imagen de la explosion
+    private final String alienpix = "alien.png"; //imagen del alien
+    private String message = "Game Over"; //mensaje a mostrar
+    private boolean bPausa; //si esta en pausa
+    private boolean bInstrucciones; //si esta en las instrucciones
+    private boolean bGameOver; //si se acabo el juego
+>>>>>>> origin/master
     
     private SoundClip scSonido1; //Explosion aliens
     private SoundClip scSonido2; //Explosion jugador
@@ -62,6 +87,12 @@ public class Board extends JPanel implements Runnable, Commons {
     
     private Thread animator;
 
+   /**
+    * Board
+    * 
+    * constructor de la clase board
+    *
+    */
     public Board() 
     {
 
@@ -77,22 +108,41 @@ public class Board extends JPanel implements Runnable, Commons {
         setDoubleBuffered(true);
     }
 
+   /**
+    * Notify
+    * 
+    * agrega una notificacion
+    *
+    */
     public void addNotify() {
         super.addNotify();
         gameInit();
     }
 
+   /**
+    * gameInit
+    * 
+    * inicializa variables de juego
+    *
+    */
     public void gameInit() {
 
+<<<<<<< HEAD
         bPausa = false;
         bInstrucciones = false;
         bGameOver = false;
         bCredits = false;
+=======
+        bPausa = false; //no esta en pausa
+        bInstrucciones = false; //no lee las instrucciones
+        bGameOver = false; //no ha perdido
+>>>>>>> origin/master
         
-        aliens = new ArrayList();
+        aliens = new ArrayList(); //aqui se guardaran los aliens
 
         ImageIcon ii = new ImageIcon(this.getClass().getResource(alienpix));
 
+        //dibuja cada alien y los agrega al vector
         for (int i=0; i < 4; i++) {
             for (int j=0; j < 6; j++) {
                 Alien alien = new Alien(alienX + 18*j, alienY + 18*i);
@@ -101,56 +151,83 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
 
+        //crea un nuevo jugador
         player = new Player();
+        
+        //crea un nuevo shot
         shot = new Shot();
 
+        //empieza el thread
         if (animator == null || !ingame) {
             animator = new Thread(this);
             animator.start();
         }
         
+        //se crean los sonidos
         scSonido1 = new SoundClip ("explosion1.wav");
         scSonido2 = new SoundClip ("explosion2.wav");
         scSonido3 = new SoundClip ("laser.wav");
-        //scBackground = new SoundClip ("darudesandstorm.wav");
-        //scBackground.setLooping (true);
-        //scBackground.play();
     }
 
+   /**
+    * drawAliens
+    * 
+    * dibuja los aliens en el jPanel
+    *
+    */
     public void drawAliens(Graphics g) 
     {
         Iterator it = aliens.iterator();
 
         while (it.hasNext()) {
             Alien alien = (Alien) it.next();
-
+            //dibuja al alien
             if (alien.isVisible()) {
                 g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
             }
 
+            //destruye al alien
             if (alien.isDying()) {
                 alien.die();
             }
         }
     }
 
+   /**
+    * drawPlayer
+    * 
+    * dibuja al jugador en el jPanel
+    *
+    */
     public void drawPlayer(Graphics g) {
 
         if (player.isVisible()) {
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
 
-        if (player.isDying()) {
+        if (player.isDying()) { //lleva a game over
             player.die();
             ingame = false;
         }
     }
 
+   /**
+    * drawShot
+    * 
+    * dibuja los hots en el jPanel
+    *
+    */
     public void drawShot(Graphics g) {
-        if (shot.isVisible())
+        if (shot.isVisible()) //Dibuja el shot
             g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
     }
 
+   /**
+    * drawBombing
+    * 
+    * dibuja las bombas en el jPanel
+    *
+    */
     public void drawBombing(Graphics g) {
 
         Iterator i3 = aliens.iterator();
@@ -160,16 +237,23 @@ public class Board extends JPanel implements Runnable, Commons {
 
             Alien.Bomb b = a.getBomb();
 
-            if (!b.isDestroyed()) {
+            if (!b.isDestroyed()) { //dibuja la bomba si no ha sido destruida
                 g.drawImage(b.getImage(), b.getX(), b.getY(), this); 
             }
         }
     }
 
+   /**
+    * paint
+    * 
+    * pinta los diferentes componentes en el jPanel
+    *
+    */
     public void paint(Graphics g)
     {
       super.paint(g);
 
+      //Dibuja el fondo
       g.setColor(Color.black);
       g.fillRect(0, 0, d.width, d.height);
       g.setColor(Color.green);   
@@ -191,10 +275,20 @@ public class Board extends JPanel implements Runnable, Commons {
       g.dispose();
     }
 
+   /**
+    * gameOver
+    * 
+    * maneja el fin de juego
+    *
+    */
     public void gameOver()
     {
+<<<<<<< HEAD
+=======
+        scBackground.stop(); //para el sonido
+>>>>>>> origin/master
         Graphics g = this.getGraphics();
-
+        
         // Actualiza la imagen de fondo.
         URL urlImagenFondo = this.getClass().getResource("background.png");
         Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
@@ -215,18 +309,24 @@ public class Board extends JPanel implements Runnable, Commons {
             BOARD_WIDTH/2);
     }
     
+   /**
+    * menu
+    * 
+    * maneja los menus de pausa e instrucciones
+    *
+    */
     public void menu()
     {
 
         Graphics g = this.getGraphics();
 
         // Actualiza la imagen de fondo.
-        if (bInstrucciones){
+        if (bInstrucciones){ //muestra menu de instrucciones
             URL urlImagenFondo = this.getClass().getResource("backgroundInstrucciones.png");
             Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
             g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
         }
-        else if (bPausa){
+        else if (bPausa){ //muestra menu de pausa
             URL urlImagenFondo = this.getClass().getResource("backgroundPausa.png");
             Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
             g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
@@ -239,6 +339,12 @@ public class Board extends JPanel implements Runnable, Commons {
          
     }
 
+   /**
+    * animationCycle
+    * 
+    * checa colisiones
+    *
+    */
     public void animationCycle()  {
 
         //Si ya mataron a todos los jugadores
@@ -368,14 +474,23 @@ public class Board extends JPanel implements Runnable, Commons {
         }
     }
 
+   /**
+    * run
+    * 
+    * aquí corre el juego
+    *
+    */
     public void run() {
-
         long beforeTime, timeDiff, sleep;
 
         beforeTime = System.currentTimeMillis();
         
         while (ingame) {
+<<<<<<< HEAD
             if (bPausa || bInstrucciones || bCredits){
+=======
+            if (bPausa || bInstrucciones){ //muestra los menus
+>>>>>>> origin/master
                 menu();
             }
             else{
@@ -518,6 +633,12 @@ public class Board extends JPanel implements Runnable, Commons {
         fileIn.close();
     }
 
+   /**
+    * TAdapter
+    * 
+    * dibuja los aliens en el jPanel
+    *
+    */
     private class TAdapter extends KeyAdapter {
 
         public void keyReleased(KeyEvent e) {

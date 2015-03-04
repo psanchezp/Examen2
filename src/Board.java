@@ -66,6 +66,9 @@ public class Board extends JPanel implements Runnable, Commons {
         setFocusable(true);
         d = new Dimension(BOARD_WIDTH, BOARD_HEIGTH);
         setBackground(Color.black);
+        scBackground = new SoundClip ("darudesandstorm.wav");
+        scBackground.setLooping (true);
+        scBackground.play();
 
         gameInit();
         setDoubleBuffered(true);
@@ -105,9 +108,9 @@ public class Board extends JPanel implements Runnable, Commons {
         scSonido1 = new SoundClip ("explosion1.wav");
         scSonido2 = new SoundClip ("explosion2.wav");
         scSonido3 = new SoundClip ("laser.wav");
-        scBackground = new SoundClip ("darudesandstorm.wav");
-        scBackground.setLooping (true);
-        scBackground.play();
+        //scBackground = new SoundClip ("darudesandstorm.wav");
+        //scBackground.setLooping (true);
+        //scBackground.play();
     }
 
     public void drawAliens(Graphics g) 
@@ -453,13 +456,11 @@ public class Board extends JPanel implements Runnable, Commons {
           
           //Se pausa el juego
           if(e.getKeyCode() == KeyEvent.VK_P) {
-            //ingame = !ingame;
             bPausa = !bPausa;
           }
           
           //Se muestran instrucciones
           if(e.getKeyCode() == KeyEvent.VK_I) {
-            //ingame = !ingame;
             bInstrucciones = !bInstrucciones;
           }
           

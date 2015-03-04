@@ -346,6 +346,14 @@ public class Board extends JPanel implements Runnable, Commons {
         }
         gameOver();
     }
+    
+    public void save() {
+        
+    }
+    
+    public void load() {
+        
+    }
 
     private class TAdapter extends KeyAdapter {
 

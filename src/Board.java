@@ -185,7 +185,6 @@ public class Board extends JPanel implements Runnable, Commons {
         }
 
         // player
-
         player.act();
 
         // shot
@@ -201,7 +200,7 @@ public class Board extends JPanel implements Runnable, Commons {
 
                 //Checa colision del shot con el alien
                 if (alien.isVisible() && shot.isVisible()) {
-                    if (alien.intersecta(shot, ALIEN_HEIGHT, ALIEN_WIDTH, BOMB_HEIGHT, BOMB_HEIGHT)){
+                    if (alien.intersecta(shot, ALIEN_HEIGHT, ALIEN_WIDTH, 30, 30)){
                             ImageIcon ii = 
                                 new ImageIcon(getClass().getResource(expl));
                             alien.setImage(ii.getImage());
@@ -285,12 +284,10 @@ public class Board extends JPanel implements Runnable, Commons {
             int bombY = b.getY();
             int playerX = player.getX();
             int playerY = player.getY();
-
+                    
+            //Colision entre bomba del alien y el jugador
             if (player.isVisible() && !b.isDestroyed()) {
-                if ( bombX >= (playerX) && 
-                    bombX <= (playerX+PLAYER_WIDTH) &&
-                    bombY >= (playerY) && 
-                    bombY <= (playerY+PLAYER_HEIGHT) ) {
+                if (player.intersecta(b, PLAYER_HEIGHT, PLAYER_WIDTH, 15, 15)) {
                         ImageIcon ii = 
                             new ImageIcon(this.getClass().getResource(expl));
                         player.setImage(ii.getImage());

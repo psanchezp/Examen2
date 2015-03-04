@@ -4,9 +4,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -143,7 +145,11 @@ public class Board extends JPanel implements Runnable, Commons {
       g.setColor(Color.green);   
 
       if (ingame) {
-
+        // Actualiza la imagen de fondo.
+        URL urlImagenFondo = this.getClass().getResource("background.png");
+        Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+         g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
+        
         g.drawLine(0, GROUND, BOARD_WIDTH, GROUND);
         drawAliens(g);
         drawPlayer(g);

@@ -411,15 +411,11 @@ public class Board extends JPanel implements Runnable, Commons {
           if(e.getKeyCode() == KeyEvent.VK_P) {
             //ingame = !ingame;
             bPausa = !bPausa;
-            message = "Pausa";
           }
           
           //Se muestran instrucciones
           if(e.getKeyCode() == KeyEvent.VK_I) {
             //ingame = !ingame;
-            message = "Instrucciones: Usa la tecla ALT para disparar a los aliens"
-                    + " y destruirlos antes de que lleguen al suelo. El jugador"
-                    + " se mueve con las flechas izquierda y derecha";
             bInstrucciones = !bInstrucciones;
           }
           

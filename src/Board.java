@@ -43,7 +43,8 @@ public class Board extends JPanel implements Runnable, Commons {
     private String message = "Game Over";
     private boolean bPausa;
     
-    private SoundClip scSonido1 = new SoundClip ("explosion1.wav");
+    private SoundClip scSonido1; //Explosion aliens
+    private SoundClip scSonido2; //Explosion jugador
     
     private Thread animator;
 
@@ -87,6 +88,9 @@ public class Board extends JPanel implements Runnable, Commons {
             animator = new Thread(this);
             animator.start();
         }
+        
+        scSonido1 = new SoundClip ("explosion1.wav");
+        scSonido2 = new SoundClip ("explosion2.wav");
     }
 
     public void drawAliens(Graphics g) 
@@ -301,6 +305,7 @@ public class Board extends JPanel implements Runnable, Commons {
                             new ImageIcon(this.getClass().getResource(expl));
                         player.setImage(ii.getImage());
                         player.setDying(true);
+                        scSonido2.play();
                         b.setDestroyed(true);;
                     }
             }

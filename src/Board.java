@@ -54,11 +54,12 @@ public class Board extends JPanel implements Runnable, Commons {
     private boolean ingame = true; //si el juego debe de correr
     private final String expl = "explosion.png"; //imagen de la explosion
     private final String alienpix = "alien.png"; //imagen del alien
-    private String message = "Game Over"; //mensaje a mostrar
+    //private String message = "Game Over"; //mensaje a mostrar
     private boolean bPausa; //si esta en pausa
     private boolean bInstrucciones; //si esta en las instrucciones
     private boolean bGameOver; //si se acabo el juego
     private boolean bCredits;
+    private boolean bWin; //Ganaste o no?
 
     
     private SoundClip scSonido1; //Explosion aliens
@@ -293,25 +294,27 @@ public class Board extends JPanel implements Runnable, Commons {
     public void gameOver()
     {
         Graphics g = this.getGraphics();
+        scBackground.stop();
+        Image imaImagenFondo;
+        
         
         // Actualiza la imagen de fondo.
-        URL urlImagenFondo = this.getClass().getResource("background.png");
-        Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
-        g.drawImage(imaImagenFondo, 0, 0, 400, 500, this);
-        scBackground.stop();
-
-        g.setColor(new Color(0, 32, 48));
-        g.fillRect(50, BOARD_WIDTH/2 - 30, BOARD_WIDTH-100, 50);
-        g.setColor(Color.white);
-        g.drawRect(50, BOARD_WIDTH/2 - 30, BOARD_WIDTH-100, 50);
-
-        Font small = new Font("Helvetica", Font.BOLD, 14);
-        FontMetrics metr = this.getFontMetrics(small);
-
-        g.setColor(Color.white);
-        g.setFont(small);
-        g.drawString(message, (BOARD_WIDTH - metr.stringWidth(message))/2, 
-            BOARD_WIDTH/2);
+        if (bGameOver){
+           URL urlImagenFondo = this.getClass().getResource("backgroundInvasion.png");
+            imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo); 
+        }
+        else if (bWin){
+            URL urlImagenFondo = this.getClass().getResource("backgroundwin.png");
+            imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+        }
+        else{
+            URL urlImagenFondo = this.getClass().getResource("backgroundgameover.png");
+            imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+        }
+        
+        while(!ingame){
+           g.drawImage(imaImagenFondo, 0, 0, 400, 500, this); 
+        }
     }
     
    /**
@@ -355,7 +358,7 @@ public class Board extends JPanel implements Runnable, Commons {
         //Si ya mataron a todos los jugadores
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
             ingame = false;
-            message = "Game won!";
+            bWin = true;
         }
 
         // player
@@ -430,7 +433,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 //si los aliens llegan al piso
                 if (y > GROUND - ALIEN_HEIGHT) {
                     ingame = false;
-                    message = "Invasion!";
+                    bGameOver = true;
                 }
 
                 alien.act(direction);
@@ -518,7 +521,7 @@ public class Board extends JPanel implements Runnable, Commons {
                 lTiempo = System.currentTimeMillis();
             }   
         }
-        //gameOver();
+        gameOver();
     }
     
     /**

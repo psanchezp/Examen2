@@ -51,10 +51,20 @@ public class Shot extends Sprite {
         Image imaShot1 = Toolkit.getDefaultToolkit().getImage(
                         this.getClass().getResource("shot.png"));
         Image imaShot2 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("shot1.png"));
+        Image imaShot3 = Toolkit.getDefaultToolkit().getImage(
                         this.getClass().getResource("shot2.png"));
+        Image imaShot4 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("shot3.png"));
+        Image imaShot5 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("shot.png"));
         
-        aniShot.sumaCuadro (imaShot1, 50);
-        aniShot.sumaCuadro (imaShot2, 50);
+        aniShot.sumaCuadro (imaShot1, 150);
+        aniShot.sumaCuadro (imaShot2, 150);
+        aniShot.sumaCuadro (imaShot3, 150);
+        aniShot.sumaCuadro (imaShot4, 150);
+        aniShot.sumaCuadro (imaShot1, 150);
+        
         setAnimacion(aniShot);
         
         setX(iX + iH_SPACE);

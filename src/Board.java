@@ -69,6 +69,9 @@ public class Board extends JPanel implements Runnable, Commons {
     private Animacion aniShot;
     private Animacion aniBomb;
     
+    private long lTiempo;
+    private long lDiffTiempo;
+    
     private Thread animator;
 
    /**
@@ -111,16 +114,16 @@ public class Board extends JPanel implements Runnable, Commons {
     */
     public void gameInit() {
         //Inicializacion de Animacion de la Bala "Shot"
-        aniShot = new Animacion ();
+        /*aniShot = new Animacion ();
         Image imaShot1 = Toolkit.getDefaultToolkit().getImage(
                         this.getClass().getResource("shot.png"));
         Image imaShot2 = Toolkit.getDefaultToolkit().getImage(
                         this.getClass().getResource("shot2.png"));
         
         aniShot.sumaCuadro (imaShot1, 50);
-        aniShot.sumaCuadro (imaShot2, 50);
+        aniShot.sumaCuadro (imaShot2, 50);*/
         
-        //Inicialiacion de Animacion de la Bala "Bomb"
+        /*Inicialiacion de Animacion de la Bala "Bomb"
         aniBomb = new Animacion ();
         Image imaBomb1 = Toolkit.getDefaultToolkit().getImage(
                         this.getClass().getResource("bomb.png"));
@@ -128,7 +131,7 @@ public class Board extends JPanel implements Runnable, Commons {
                         this.getClass().getResource("bomb2.png"));
         
         aniBomb.sumaCuadro(imaBomb1, 50);
-        aniBomb.sumaCuadro(imaBomb2, 50);
+        aniBomb.sumaCuadro(imaBomb2, 50); */
         
         bPausa = false; //no esta en pausa
         bInstrucciones = false; //no lee las instrucciones
@@ -153,7 +156,8 @@ public class Board extends JPanel implements Runnable, Commons {
         player = new Player();
         
         //crea un nuevo shot
-        shot = new Shot(aniShot);
+        shot = new Shot();
+        shot.setAnimacion(aniShot);
 
         //empieza el thread
         if (animator == null || !ingame) {
@@ -216,8 +220,10 @@ public class Board extends JPanel implements Runnable, Commons {
     *
     */
     public void drawShot(Graphics g) {
-        if (shot.isVisible()) //Dibuja el shot
-            g.drawImage(aniShot.getImagen (), shot.getX(), shot.getY(), this);
+        if (shot.isVisible()){ //Dibuja el shot
+            shot.getAnimacion().actualiza(lTiempo); 
+            g.drawImage(shot.getAnimacion().getImagen(), shot.getX(), shot.getY(), this);
+        }
     }
 
    /**
@@ -236,7 +242,8 @@ public class Board extends JPanel implements Runnable, Commons {
             Alien.Bomb b = a.getBomb();
 
             if (!b.isDestroyed()) { //dibuja la bomba si no ha sido destruida
-                g.drawImage(b.getImage(), b.getX(), b.getY(), this); 
+                b.getAnimacion().actualiza(lTiempo);
+                g.drawImage(b.getAnimacion().getImagen(), b.getX(), b.getY(), this); 
             }
         }
     }
@@ -268,6 +275,10 @@ public class Board extends JPanel implements Runnable, Commons {
         drawShot(g);
         drawBombing(g);
       }
+      /*else{
+        URL urlImagenFondo = this.getClass().getResource("background.png");
+        Image imaImagenFondo = Toolkit.getDefaultToolkit().getImage(urlImagenFondo);
+      }*/
 
       Toolkit.getDefaultToolkit().sync();
       g.dispose();
@@ -467,12 +478,12 @@ public class Board extends JPanel implements Runnable, Commons {
             }
         }
         
-        if (shot.isVisible()){
+        /*if (shot.isVisible()){
             //Animacion Shot
             long lTime = System.currentTimeMillis();
             long timeDiff = System.currentTimeMillis() - lTime;
-            aniShot.actualiza(timeDiff);
-        }
+            shot.getAnimacion().actualiza(timeDiff);
+        }*/
     }
 
    /**
@@ -482,9 +493,9 @@ public class Board extends JPanel implements Runnable, Commons {
     *
     */
     public void run() {
-        long beforeTime, timeDiff, sleep;
+        long sleep;
 
-        beforeTime = System.currentTimeMillis();
+        lTiempo = System.currentTimeMillis();
         
         while (ingame) {
             if (bPausa || bInstrucciones || bCredits){
@@ -494,8 +505,8 @@ public class Board extends JPanel implements Runnable, Commons {
                 repaint();
                 animationCycle();
 
-                timeDiff = System.currentTimeMillis() - beforeTime;
-                sleep = DELAY - timeDiff;
+                lDiffTiempo = System.currentTimeMillis() - lTiempo;
+                sleep = DELAY - lDiffTiempo;
 
                 if (sleep < 0) 
                     sleep = 2;
@@ -504,10 +515,10 @@ public class Board extends JPanel implements Runnable, Commons {
                 } catch (InterruptedException e) {
                     System.out.println("interrupted");
                 }
-                beforeTime = System.currentTimeMillis();
+                lTiempo = System.currentTimeMillis();
             }   
         }
-        gameOver();
+        //gameOver();
     }
     
     /**

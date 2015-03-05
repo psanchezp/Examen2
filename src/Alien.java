@@ -1,4 +1,6 @@
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 
 /*
@@ -21,7 +23,7 @@ public class Alien extends Sprite {
 
     private Bomb bmbBomb; //Objeto bomba
     private final String strShot = "alien.png"; //Nombre de la imagen alien
-    private Animacion aniAlien;
+    private Animacion aniBomb;
 
     /**
      * Alien
@@ -49,13 +51,13 @@ public class Alien extends Sprite {
      * @param iX es un <code>int</code> que es posicion en x
      * @param iY es un <code>int</code> que es posicion en y
      * @param aniAlien es un <code>Animacion</code> que define la animacion
-     */
+     *
     public Alien (int iX, int iY, Animacion aniAlien){
         this.iX = iX;
         this.iY = iY;
         bmbBomb = new Bomb(iX, iY);
         this.aniAlien = aniAlien;
-    }
+    } */
     
 
     /**
@@ -99,8 +101,19 @@ public class Alien extends Sprite {
             setDestroyed(true);
             this.iX = iX;
             this.iY = iY;
-            ImageIcon iI = new ImageIcon(this.getClass().getResource(bmbBomb));
-            setImage(iI.getImage());
+            
+            //Poniendo la animacion de bomb
+            aniBomb = new Animacion ();
+            Image imaBomb1 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("bomb.png"));
+            Image imaBomb2 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("bomb2.png"));
+            
+            aniBomb.sumaCuadro(imaBomb1, 50);
+            aniBomb.sumaCuadro(imaBomb2, 50);
+            setAnimacion(aniBomb);
+            //ImageIcon iI = new ImageIcon(this.getClass().getResource(bmbBomb));
+            //setImage(iI.getImage());
         }
 
         /**

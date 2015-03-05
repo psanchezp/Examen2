@@ -19,7 +19,7 @@ import java.awt.Rectangle;
  * @date 3/4/2015
  */
 
-public class Sprite {
+public class Sprite extends Animacion{
 
     private boolean bVisible; //si el sprite esta bVisible (muerto)
     private Image ImaImagen; //imagen del sprite
@@ -27,6 +27,7 @@ public class Sprite {
     protected int iY; //posicion en iY
     protected boolean bDying; //si el sprite esta muriendo
     protected int iDx; //diferencial de movimiento en x
+    private Animacion aniAnimado; //animacion del sprite
 
     
     /**
@@ -38,7 +39,31 @@ public class Sprite {
     public Sprite() {
         bVisible = true;
     }
-
+    
+    /**
+     * setAnimacion
+     * 
+     * Metodo que define la animacion de cierto sprite
+     * 
+     * @param aniAnimado la animacion del sprite
+     */
+    
+    public void setAnimacion (Animacion aniAnimado){
+        this.aniAnimado = aniAnimado;
+    }
+    
+    /**
+     * getAnimacion
+     * 
+     * Metodo que regresa la animacion del sprite
+     * @return <code>Animacion</code> que contiene la animacion del obj.
+     */
+    
+    public Animacion getAnimacion (){
+        return aniAnimado;
+    }
+    
+    
     /**
      * die
      * 

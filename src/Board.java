@@ -66,6 +66,9 @@ public class Board extends JPanel implements Runnable, Commons {
     private SoundClip scSonido3; //Disparo
     private SoundClip scBackground; //Background sound
     
+    private Animacion aniShot;
+    private Animacion aniBomb;
+    
     private Thread animator;
 
    /**
@@ -107,8 +110,26 @@ public class Board extends JPanel implements Runnable, Commons {
     *
     */
     public void gameInit() {
-
-
+        //Inicializacion de Animacion de la Bala "Shot"
+        aniShot = new Animacion ();
+        Image imaShot1 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("shot.png"));
+        Image imaShot2 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("shot2.png"));
+        
+        aniShot.sumaCuadro (imaShot1, 50);
+        aniShot.sumaCuadro (imaShot2, 50);
+        
+        //Inicialiacion de Animacion de la Bala "Bomb"
+        aniBomb = new Animacion ();
+        Image imaBomb1 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("bomb.png"));
+        Image imaBomb2 = Toolkit.getDefaultToolkit().getImage(
+                        this.getClass().getResource("bomb2.png"));
+        
+        aniBomb.sumaCuadro(imaBomb1, 50);
+        aniBomb.sumaCuadro(imaBomb2, 50);
+        
         bPausa = false; //no esta en pausa
         bInstrucciones = false; //no lee las instrucciones
         bGameOver = false; //no ha perdido
@@ -132,7 +153,7 @@ public class Board extends JPanel implements Runnable, Commons {
         player = new Player();
         
         //crea un nuevo shot
-        shot = new Shot();
+        shot = new Shot(aniShot);
 
         //empieza el thread
         if (animator == null || !ingame) {
@@ -191,12 +212,12 @@ public class Board extends JPanel implements Runnable, Commons {
    /**
     * drawShot
     * 
-    * dibuja los hots en el jPanel
+    * dibuja los shot en el jPanel
     *
     */
     public void drawShot(Graphics g) {
         if (shot.isVisible()) //Dibuja el shot
-            g.drawImage(shot.getImage(), shot.getX(), shot.getY(), this);
+            g.drawImage(aniShot.getImagen (), shot.getX(), shot.getY(), this);
     }
 
    /**
@@ -319,7 +340,7 @@ public class Board extends JPanel implements Runnable, Commons {
     *
     */
     public void animationCycle()  {
-
+        
         //Si ya mataron a todos los jugadores
         if (deaths == NUMBER_OF_ALIENS_TO_DESTROY) {
             ingame = false;
@@ -444,6 +465,13 @@ public class Board extends JPanel implements Runnable, Commons {
                     b.setDestroyed(true);
                 }
             }
+        }
+        
+        if (shot.isVisible()){
+            //Animacion Shot
+            long lTime = System.currentTimeMillis();
+            long timeDiff = System.currentTimeMillis() - lTime;
+            aniShot.actualiza(timeDiff);
         }
     }
 

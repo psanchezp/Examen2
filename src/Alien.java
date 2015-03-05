@@ -21,6 +21,7 @@ public class Alien extends Sprite {
 
     private Bomb bmbBomb; //Objeto bomba
     private final String strShot = "alien.png"; //Nombre de la imagen alien
+    private Animacion aniAlien;
 
     /**
      * Alien
@@ -39,6 +40,23 @@ public class Alien extends Sprite {
         setImage(ii.getImage());
 
     }
+    
+    /**
+     * Alien 2
+     * 
+     * constructor de la clase alien con animacion
+     * 
+     * @param iX es un <code>int</code> que es posicion en x
+     * @param iY es un <code>int</code> que es posicion en y
+     * @param aniAlien es un <code>Animacion</code> que define la animacion
+     */
+    public Alien (int iX, int iY, Animacion aniAlien){
+        this.iX = iX;
+        this.iY = iY;
+        bmbBomb = new Bomb(iX, iY);
+        this.aniAlien = aniAlien;
+    }
+    
 
     /**
      * act
